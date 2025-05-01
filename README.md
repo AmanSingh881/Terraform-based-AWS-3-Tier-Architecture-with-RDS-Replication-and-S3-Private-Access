@@ -15,15 +15,37 @@ This project demonstrates how to host a secure and scalable website on AWS using
 ## ⚙️ Key Components
 
 ### ✅ VPC and Networking
-- **VPC**: Custom Virtual Private Cloud with three subnet types—public, private, and database.
-- **Subnets**: Distributed across multiple Availability Zones for high availability and fault tolerance.
-- **CIDR Blocks**: Organized to avoid address overlap and allow for future growth.
-
-### ✅ Internet Gateway and NAT Gateway
-- **Internet Gateway**: Enables internet access for resources in public subnets.
-- **NAT Gateway**: Deployed in public subnets to allow instances in private subnets to initiate outbound connections without direct internet exposure.
-
-### ✅ Load Balancers and Auto Scaling
-- **Public Load Balancer**: Routes incoming traffic from the internet to EC2 instances in the public subnet. These instances are managed by an **Auto Scaling Group** to scale based on demand and ensure high availability.
+- **VPC**: Custom Virtual Private Cloud configured with four subnets — two public and two private — across two Availability Zones.
+- **Public Subnets**: Host the Internet-facing Load Balancer and a Bastion Host for secure administration.
+- **Private Subnets**: Host EC2 instances that are not directly exposed to the internet.
+- **Routing**: 
+  - Public subnets route to the **Internet Gateway**.
+  - Private subnets route to the internet via **NAT Gateway** in the public subnet.
 
 ---
+
+### ✅ Internet Gateway and NAT Gateway
+- **Internet Gateway**: Enables internet access for the Load Balancer and Bastion Host.
+- **NAT Gateway**: Allows instances in private subnets to reach the internet securely for updates and patches.
+
+---
+
+### ✅ Load Balancer and Auto Scaling
+- **Application Load Balancer (ALB)**: Deployed in public subnets, it routes external HTTPS traffic to EC2 instances in private subnets.
+- **Auto Scaling Group (ASG)**: Dynamically manages EC2 instances to handle varying workloads, ensuring high availability and fault tolerance.
+
+---
+
+### ✅ Route 53 and ACM
+- **Route 53**: Manages the custom domain name and routes DNS traffic to the Load Balancer.
+- **AWS Certificate Manager (ACM)**: Provides SSL certificates for secure HTTPS access.
+
+---
+
+### ✅ Bastion Host
+- **Purpose**: Provides SSH access to EC2 instances in private subnets.
+- **Location**: Deployed in a public subnet with tightly restricted IP access.
+
+---
+
+![Project Architecture](assets/block_diagram.png)
