@@ -1,16 +1,16 @@
-# Terraform-based-AWS-3-Tier-Architecture-with-RDS-Replication-and-S3-Private-Access
-A production-ready, modular Terraform project that provisions a secure, scalable 3-tier AWS architecture with public, private, and database subnets, RDS with read replicas, and private S3 access using a VPC endpoint.
+# 🌐 Infrastructure as Code: Scalable Web Hosting Architecture with AWS and Terraform
 
-**Project Description:**  
-Modular Terraform solution deploying a secure, scalable AWS 3‑tier architecture with public, private, and database subnets; RDS primary with multi‑AZ read replicas; VPC endpoint for S3 access; and Auto Scaling Groups behind public and internal Load Balancers for automated scaling, high availability, and operational resilience; cost-effective, resilient, and secure networking.
+This project demonstrates how to host a secure and scalable website on AWS using EC2 instances in private subnets, an Internet-Facing Application Load Balancer (ALB), Auto Scaling Group (ASG), and Route 53 + AWS Certificate Manager (ACM) for domain management and HTTPS support — all managed with Terraform infrastructure as code (IaC).
 
----
-
-## 📚 Overview
-
-This project provisions a fully functional, production-grade 3-tier AWS architecture using Terraform. It separates concerns across public, private, and database layers, integrates managed services like RDS with replication, and configures secure communication paths using NAT Gateways, Internet Gateways, Load Balancers with Auto Scaling, and VPC Endpoints.
-
----
+## 🚀 Features
+- Fully automated infrastructure deployment using Terraform
+- EC2 instances launched in private subnets via Auto Scaling Group
+- Internet-facing Application Load Balancer (ALB) routing traffic to private instances
+- Custom domain name managed through Route 53
+- SSL/TLS certificate provisioning via AWS Certificate Manager (ACM)
+- Secure HTTPS access for end users
+- Highly available and scalable architecture
+- Infrastructure follows best security practices
 
 ## ⚙️ Key Components
 
@@ -25,14 +25,5 @@ This project provisions a fully functional, production-grade 3-tier AWS architec
 
 ### ✅ Load Balancers and Auto Scaling
 - **Public Load Balancer**: Routes incoming traffic from the internet to EC2 instances in the public subnet. These instances are managed by an **Auto Scaling Group** to scale based on demand and ensure high availability.
-- **Internal Load Balancer**: Distributes traffic from public-tier instances to EC2 instances in private subnets. These backend instances are also part of an **Auto Scaling Group**, enabling automatic scaling for application workloads.
-
-### ✅ RDS Setup
-- **Primary Database**: Single primary RDS instance for read/write operations.
-- **Read Replicas**: Two multi‑AZ read replicas for read scalability and high availability.
-- **Database Subnets**: Isolated subnets with no direct internet access, enforcing a secure database tier.
-
-### ✅ S3 VPC Endpoint
-- **Gateway Endpoint**: Provides private connectivity between private subnets and S3, eliminating the need for internet routing.
 
 ---
