@@ -1,5 +1,7 @@
 # 🌐 Infrastructure as Code: Scalable Web Hosting Architecture with AWS and Terraform
 
+![Project Architecture](assets/block_diagram.png)
+
 This project demonstrates how to host a secure and scalable website on AWS using EC2 instances in private subnets, an Internet-Facing Application Load Balancer (ALB), Auto Scaling Group (ASG), and Route 53 + AWS Certificate Manager (ACM) for domain management and HTTPS support — all managed with Terraform infrastructure as code (IaC).
 
 ## 🚀 Features
@@ -48,4 +50,4 @@ This project demonstrates how to host a secure and scalable website on AWS using
 
 ---
 
-![Project Architecture](assets/block_diagram.png)
+
