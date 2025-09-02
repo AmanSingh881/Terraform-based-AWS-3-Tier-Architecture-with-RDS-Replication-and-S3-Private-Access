@@ -1,39 +1,52 @@
 # Terraform AWS Network Load Balancer (NLB)
-module "nlb" {
+module "loadbalancer" {
+  # depends_on = [ module.autoscalinggroup, module.vpc ]
   source  = "terraform-aws-modules/alb/aws"
   version = "9.16.0"
 
-  name_prefix = "mylb-"
+  name_prefix = "tflb-"
   load_balancer_type               = "application"
   vpc_id                           = module.vpc.vpc_id
   dns_record_client_routing_policy = "availability_zone_affinity"
-  security_groups = [module.loadbalancer_sg.security_group_id]
+  security_groups = [module.loadbalancerSG.security_group_id]
 
   subnets = module.vpc.public_subnets
 
-  # For example only
   enable_deletion_protection = false
+
+  # listeners = {
+  #     ex-http-https-redirect = {
+  #       port     = 80
+  #       protocol = "HTTP"
+  #       redirect = {
+  #         port        = "443"
+  #         protocol    = "HTTPS"
+  #         status_code = "HTTP_301"
+  #       }
+  #     }
+  #     ex-https = {
+  #       port            = 443
+  #       protocol        = "HTTPS"
+  #       certificate_arn = data.aws_acm_certificate.example_cert.arn
+
+  #       forward = {
+  #         target_group_key = "mytg1"
+  #       }
+  #     }
+  #   }
 
   listeners = {
       ex-http-https-redirect = {
         port     = 80
         protocol = "HTTP"
-        redirect = {
-          port        = "443"
-          protocol    = "HTTPS"
-          status_code = "HTTP_301"
-        }
-      }
-      ex-https = {
-        port            = 443
-        protocol        = "HTTPS"
-        certificate_arn = data.aws_acm_certificate.example_cert.arn
 
         forward = {
           target_group_key = "mytg1"
         }
-      }
     }
+  }
+  
+
 
 # Target Groups
   target_groups = { 
@@ -48,7 +61,7 @@ module "nlb" {
       health_check = {
         enabled             = true
         interval            = 30
-        path                = "/app1/index.html"
+        path                = "/"
         port                = "traffic-port"
         healthy_threshold   = 3
         unhealthy_threshold = 3
@@ -57,4 +70,4 @@ module "nlb" {
     }# End Target Group-1: mytg1
   }
   tags = local.common_tags
-}# End NLB Module
+}

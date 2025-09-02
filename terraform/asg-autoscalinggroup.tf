@@ -1,9 +1,9 @@
-module "autoscaling" {
+module "autoscalinggroup" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "8.2.0"
+  version = "9.0.1"
   
   
-  name = "example-asg"
+  name = "asg"
 
   min_size                  = 1
   max_size                  = 5
@@ -16,7 +16,7 @@ module "autoscaling" {
   # Traffic source attachment
   traffic_source_attachments = {
     ex-alb = {
-      traffic_source_identifier = module.nlb.target_groups["mytg1"].arn
+      traffic_source_identifier = module.loadbalancer.target_groups["mytg1"].arn
       traffic_source_type       = "elbv2" # default
     }
   }
@@ -26,21 +26,21 @@ module "autoscaling" {
   }
 
   # Launch template
-  launch_template_name        = "example-asg"
-  launch_template_description = "Launch template example"
+  launch_template_name        = "asg_launch_tamplate"
+  launch_template_description = "Launch template"
   update_default_version      = true
 
-  image_id          = data.aws_ami.amzlinux2.image_id
+  image_id          = "ami-00ca32bbc84273381"
   key_name          = var.instance_keypair 
   instance_type     = "t3.micro"
-  user_data = filebase64("${path.module}/app1-install.sh")
+  user_data = filebase64("${path.module}/user-data.sh")
 
   network_interfaces = [
     {
       delete_on_termination = true
       description           = "eth0"
       device_index          = 0
-      security_groups       = [module.private_sg.security_group_id]
+      security_groups       = [module.privateInstanceSG.security_group_id]
     }
   ]
 

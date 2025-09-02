@@ -12,7 +12,7 @@ variable "instance_type" {
 variable "instance_keypair" {
   description = "AWS EC2 Key pair that need to be associated with EC2 Instance"
   type = string
-  default = "web"
+  default = "kube"
 }
 
 # AWS EC2 Private Instance Count
@@ -20,4 +20,11 @@ variable "private_instance_count" {
   description = "AWS EC2 Private Instances Count"
   type = number
   default = 1  
+}
+
+# AWS EC2 Instance AMI
+variable "instance_ami" {
+  description = "EC2 Instance AMI"
+  type = string
+  default = "ami-00ca32bbc84273381"  
 }

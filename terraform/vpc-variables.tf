@@ -1,10 +1,8 @@
-# VPC Input Variables
-
 # VPC Name
 variable "vpc_name" {
   description = "VPC Name"
   type = string 
-  default = "myvpc"
+  default = "VPC"
 }
 
 # VPC CIDR Block
